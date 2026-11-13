@@ -1,0 +1,17 @@
+[Unit]
+Description=gunicorn daemon for Django app
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/devops-scaling-app
+ExecStart=/home/ubuntu/devops-scaling-app/venv/bin/gunicorn \
+    --workers 2 \
+    --bind unix:/home/ubuntu/devops-scaling-app/devops.sock \
+    core.wsgi:application
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
